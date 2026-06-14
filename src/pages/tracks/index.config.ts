@@ -1,0 +1,4 @@
+export default definePageConfig({
+  navigationBarTitleText: '历史轨迹',
+  enablePullDownRefresh: true
+})

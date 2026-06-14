@@ -1,0 +1,94 @@
+@use '@/styles/variables.scss' as *;
+
+.listItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  background: $color-bg-card;
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+  
+  &:not(:last-child) {
+    &::after {
+      content: '';
+      position: absolute;
+      left: $spacing-lg;
+      right: 0;
+      bottom: 0;
+      height: 1rpx;
+      background: $color-divider;
+    }
+  }
+  
+  position: relative;
+}
+
+.icon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-lg;
+  flex-shrink: 0;
+  font-size: 32rpx;
+  
+  &.primary {
+    background: $color-bg-primary;
+    color: $color-primary;
+  }
+  
+  &.success {
+    background: $color-bg-success;
+    color: $color-success;
+  }
+  
+  &.warning {
+    background: $color-bg-warning;
+    color: $color-warning;
+  }
+  
+  &.danger {
+    background: $color-bg-danger;
+    color: $color-danger;
+  }
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+  @include text-ellipsis;
+}
+
+.desc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  @include text-ellipsis;
+}
+
+.right {
+  margin-left: $spacing-md;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.rightText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-right: $spacing-sm;
+}
+
+.arrow {
+  color: $color-text-tertiary;
+  font-size: $font-size-lg;
+}

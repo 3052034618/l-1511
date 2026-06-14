@@ -1,0 +1,307 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f53f3f 0%, #ff7875 100%);
+  padding: $spacing-lg $page-padding;
+}
+
+.sosContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: $spacing-xxl;
+}
+
+.statusBadge {
+  padding: $spacing-sm $spacing-lg;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-round;
+  color: $color-text-white;
+  font-size: $font-size-md;
+  margin-bottom: $spacing-xxl;
+  display: flex;
+  align-items: center;
+}
+
+.statusDot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: $radius-round;
+  background: $color-text-white;
+  margin-right: $spacing-sm;
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.sosButton {
+  width: 300rpx;
+  height: 300rpx;
+  border-radius: $radius-round;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: $spacing-xxl;
+  position: relative;
+}
+
+.sosButtonInner {
+  width: 240rpx;
+  height: 240rpx;
+  border-radius: $radius-round;
+  background: $color-text-white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.2);
+}
+
+.sosText {
+  font-size: 64rpx;
+  font-weight: $font-weight-bold;
+  color: $color-danger;
+  letter-spacing: 4rpx;
+}
+
+.sosSubText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-top: 4rpx;
+}
+
+.timeDisplay {
+  font-size: 48rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  margin-bottom: $spacing-lg;
+}
+
+.locationCard {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.cardTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+}
+
+.cardIcon {
+  margin-right: $spacing-sm;
+  font-size: 28rpx;
+}
+
+.locationContent {
+  display: flex;
+  align-items: flex-start;
+}
+
+.locationDot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: $radius-round;
+  background: $color-danger;
+  margin-top: 10rpx;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.locationInfo {
+  flex: 1;
+}
+
+.locationAddress {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+  line-height: 1.5;
+}
+
+.locationCoord {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.audioCard {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.audioContent {
+  display: flex;
+  align-items: center;
+}
+
+.audioIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-md;
+  background: $color-bg-danger;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  margin-right: $spacing-md;
+}
+
+.audioInfo {
+  flex: 1;
+}
+
+.audioStatus {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: 4rpx;
+}
+
+.audioWave {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  height: 40rpx;
+}
+
+.waveBar {
+  width: 6rpx;
+  background: $color-danger;
+  border-radius: 2rpx;
+  animation: wave 0.5s ease-in-out infinite alternate;
+  
+  &:nth-child(1) { height: 20rpx; animation-delay: 0s; }
+  &:nth-child(2) { height: 30rpx; animation-delay: 0.1s; }
+  &:nth-child(3) { height: 40rpx; animation-delay: 0.2s; }
+  &:nth-child(4) { height: 30rpx; animation-delay: 0.3s; }
+  &:nth-child(5) { height: 20rpx; animation-delay: 0.4s; }
+}
+
+@keyframes wave {
+  from { transform: scaleY(0.5); }
+  to { transform: scaleY(1); }
+}
+
+.contactsCard {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+}
+
+.contactsList {
+  max-height: 300rpx;
+  overflow-y: auto;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-sm 0;
+  
+  &:not(:last-child) {
+    border-bottom: 1rpx solid $color-divider;
+  }
+}
+
+.contactAvatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-round;
+  background: $color-primary-gradient;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  flex-shrink: 0;
+}
+
+.contactAvatarText {
+  color: $color-text-white;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+}
+
+.contactInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.contactName {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: 2rpx;
+}
+
+.contactPhone {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.contactStatus {
+  font-size: $font-size-sm;
+  color: $color-success;
+}
+
+.bottomBar {
+  margin-top: $spacing-xl;
+  display: flex;
+  gap: $spacing-md;
+  width: 100%;
+}
+
+.cancelBtn {
+  flex: 1;
+  height: $button-height-lg;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid rgba(255, 255, 255, 0.5);
+  
+  &:active {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+.cancelBtnText {
+  font-size: $font-size-md;
+  color: $color-text-white;
+}
+
+.confirmBtn {
+  flex: 2;
+  height: $button-height-lg;
+  background: $color-text-white;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.15);
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.confirmBtnText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-danger;
+}

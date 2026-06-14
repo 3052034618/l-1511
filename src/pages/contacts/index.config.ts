@@ -1,0 +1,4 @@
+export default definePageConfig({
+  navigationBarTitleText: '紧急联系人',
+  enablePullDownRefresh: true
+})

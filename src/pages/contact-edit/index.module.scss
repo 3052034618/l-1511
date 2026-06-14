@@ -1,0 +1,261 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 160rpx;
+}
+
+.formSection {
+  background: $color-bg-card;
+  margin-bottom: $spacing-md;
+}
+
+.formItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  position: relative;
+  
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: $spacing-lg;
+    right: 0;
+    bottom: 0;
+    height: 1rpx;
+    background: $color-divider;
+  }
+}
+
+.label {
+  width: 160rpx;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  flex-shrink: 0;
+}
+
+.inputWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  text-align: right;
+}
+
+.placeholder {
+  color: $color-text-disabled;
+}
+
+.required {
+  color: $color-error;
+  margin-right: 4rpx;
+}
+
+.selectValue {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.arrow {
+  margin-left: $spacing-sm;
+  color: $color-text-tertiary;
+  font-size: $font-size-lg;
+}
+
+.errorMsg {
+  padding: $spacing-sm $page-padding;
+  font-size: $font-size-sm;
+  color: $color-error;
+  background: $color-bg-danger;
+}
+
+.permissionSection {
+  padding: $spacing-lg $page-padding;
+  background: $color-bg-card;
+  margin-bottom: $spacing-md;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.permissionList {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.permissionItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-md $spacing-lg;
+  border: 2rpx solid $color-border;
+  border-radius: $radius-md;
+  transition: all $transition-fast;
+  
+  &.active {
+    border-color: $color-primary;
+    background: $color-bg-primary;
+  }
+  
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.permissionRadio {
+  width: 36rpx;
+  height: 36rpx;
+  border-radius: $radius-round;
+  border: 2rpx solid $color-border;
+  margin-right: $spacing-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  
+  .active & {
+    border-color: $color-primary;
+    background: $color-primary;
+  }
+}
+
+.permissionRadioInner {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: $radius-round;
+  background: $color-text-white;
+  display: none;
+  
+  .active & {
+    display: block;
+  }
+}
+
+.permissionInfo {
+  flex: 1;
+}
+
+.permissionName {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: 4rpx;
+}
+
+.permissionDesc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.emergencyToggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-lg;
+  background: $color-bg-card;
+}
+
+.emergencyInfo {
+  flex: 1;
+}
+
+.emergencyTitle {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: 4rpx;
+}
+
+.emergencyDesc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc(#{$spacing-md} + env(safe-area-inset-bottom));
+  background: $color-bg-card;
+  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  gap: $spacing-md;
+}
+
+.cancelBtn {
+  flex: 1;
+  height: $button-height-lg;
+  background: $color-bg-hover;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:active {
+    background: $color-border;
+  }
+}
+
+.cancelBtnText {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}
+
+.saveBtn {
+  flex: 2;
+  height: $button-height-lg;
+  background: $color-primary-gradient;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(22, 93, 255, 0.3);
+  
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+  
+  &.disabled {
+    opacity: 0.5;
+    box-shadow: none;
+  }
+}
+
+.saveBtnText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+}
+
+.deleteBtn {
+  margin: $spacing-md $page-padding;
+  height: $button-height-md;
+  background: $color-bg-card;
+  border: 2rpx solid $color-error;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:active {
+    background: $color-bg-danger;
+  }
+}
+
+.deleteBtnText {
+  font-size: $font-size-md;
+  color: $color-error;
+}

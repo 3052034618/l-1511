@@ -1,0 +1,183 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+}
+
+.tabs {
+  display: flex;
+  background: $color-bg-card;
+  padding: 0 $page-padding;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.tabItem {
+  flex: 1;
+  height: 88rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+  position: relative;
+  
+  &.active {
+    color: $color-primary;
+    font-weight: $font-weight-semibold;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48rpx;
+      height: 6rpx;
+      background: $color-primary;
+      border-radius: 3rpx;
+    }
+  }
+  
+  &:active {
+    opacity: 0.7;
+  }
+}
+
+.tabBadge {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  min-width: 32rpx;
+  height: 32rpx;
+  padding: 0 8rpx;
+  background: $color-error;
+  color: $color-text-white;
+  font-size: 20rpx;
+  border-radius: $radius-round;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notificationList {
+  padding: $spacing-md $page-padding;
+}
+
+.notificationItem {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+  position: relative;
+  
+  &.unread::before {
+    content: '';
+    position: absolute;
+    top: $spacing-lg;
+    right: $spacing-lg;
+    width: 16rpx;
+    height: 16rpx;
+    background: $color-error;
+    border-radius: $radius-round;
+  }
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.notificationHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-sm;
+}
+
+.notificationIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  font-size: 32rpx;
+  flex-shrink: 0;
+  
+  &.sos {
+    background: $color-bg-danger;
+  }
+  
+  &.warning {
+    background: $color-bg-warning;
+  }
+  
+  &.info {
+    background: $color-bg-primary;
+  }
+  
+  &.geofence {
+    background: rgba(0, 180, 42, 0.1);
+  }
+}
+
+.notificationTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  flex: 1;
+  padding-right: $spacing-lg;
+}
+
+.notificationContent {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.6;
+  margin-bottom: $spacing-sm;
+  padding-left: 80rpx;
+}
+
+.notificationTime {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+  text-align: right;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xxl $page-padding;
+}
+
+.emptyIcon {
+  font-size: 100rpx;
+  margin-bottom: $spacing-lg;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-sm;
+}
+
+.emptyHint {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.headerActions {
+  display: flex;
+  justify-content: flex-end;
+  padding: $spacing-sm $page-padding;
+}
+
+.markAllBtn {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  
+  &:active {
+    opacity: 0.7;
+  }
+}

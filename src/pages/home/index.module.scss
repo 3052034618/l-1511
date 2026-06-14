@@ -1,0 +1,190 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #165dff 0%, #4080ff 30%, $color-bg-page 30%);
+}
+
+.header {
+  padding: $spacing-lg $page-padding $spacing-xl;
+  color: $color-text-white;
+}
+
+.greeting {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-xs;
+}
+
+.subGreeting {
+  font-size: $font-size-sm;
+  opacity: 0.9;
+}
+
+.statusCard {
+  margin: 0 $page-padding $spacing-lg;
+  padding: $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-md;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.statusIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  margin-right: $spacing-md;
+  
+  &.success {
+    background: $color-bg-success;
+  }
+  
+  &.warning {
+    background: $color-bg-warning;
+  }
+  
+  &.info {
+    background: $color-bg-primary;
+  }
+}
+
+.statusInfo {
+  flex: 1;
+}
+
+.statusLabel {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-bottom: 4rpx;
+}
+
+.statusValue {
+  font-size: $font-size-md;
+  font-weight: $font-weight-medium;
+  color: $color-text-primary;
+}
+
+.sosSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xl $page-padding;
+  margin-bottom: $spacing-lg;
+}
+
+.sosTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-xl;
+}
+
+.sosDesc {
+  margin-top: $spacing-lg;
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.quickActions {
+  margin: 0 $page-padding;
+}
+
+.sectionTitle {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.actionGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-md;
+}
+
+.actionItem {
+  width: calc((100% - 24rpx) / 2);
+  padding: $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  
+  &:active {
+    transform: scale(0.98);
+    transition: all $transition-fast;
+  }
+}
+
+.actionIcon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  margin-bottom: $spacing-md;
+  
+  &.primary {
+    background: $color-bg-primary;
+  }
+  
+  &.success {
+    background: $color-bg-success;
+  }
+  
+  &.warning {
+    background: $color-bg-warning;
+  }
+  
+  &.danger {
+    background: $color-bg-danger;
+  }
+}
+
+.actionText {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  font-weight: $font-weight-medium;
+}
+
+.tipSection {
+  margin: $spacing-xl $page-padding $spacing-xxl;
+  padding: $spacing-lg;
+  background: rgba(22, 93, 255, 0.08);
+  border-radius: $radius-md;
+  border-left: 6rpx solid $color-primary;
+}
+
+.tipTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.tipContent {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.6;
+}

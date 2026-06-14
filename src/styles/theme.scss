@@ -1,0 +1,45 @@
+// ============================================
+// 主题配色变量
+// ============================================
+
+// 品牌主题色
+$color-primary: #165dff;
+$color-primary-light: #4080ff;
+$color-primary-dark: #0e42d2;
+$color-primary-gradient: linear-gradient(135deg, #165dff 0%, #4080ff 100%);
+
+// 辅助色
+$color-secondary: #0fc6c2;
+$color-secondary-light: #3ddcd9;
+
+// 紧急色（SOS）
+$color-danger: #f53f3f;
+$color-danger-light: #ff6b6b;
+$color-danger-dark: #d92f2f;
+$color-danger-gradient: linear-gradient(135deg, #f53f3f 0%, #ff7875 100%);
+
+// 功能色
+$color-success: #00b42a;
+$color-warning: #ff7d00;
+$color-error: #f53f3f;
+$color-info: #165dff;
+
+// 背景色
+$color-bg-page: #f5f6f7;
+$color-bg-card: #ffffff;
+$color-bg-hover: #f2f3f5;
+$color-bg-primary: rgba(22, 93, 255, 0.08);
+$color-bg-danger: rgba(245, 63, 63, 0.08);
+$color-bg-success: rgba(0, 180, 42, 0.08);
+$color-bg-warning: rgba(255, 125, 0, 0.08);
+
+// 文本色
+$color-text-primary: #1d2129;
+$color-text-secondary: #4e5969;
+$color-text-tertiary: #86909c;
+$color-text-disabled: #c9cdd4;
+$color-text-white: #ffffff;
+
+// 边框色
+$color-border: #e5e6eb;
+$color-divider: #f2f3f5;

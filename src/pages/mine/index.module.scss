@@ -1,0 +1,208 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 40rpx;
+}
+
+.header {
+  padding: $spacing-xxl $page-padding $spacing-xl;
+  background: linear-gradient(135deg, #165dff 0%, #4080ff 100%);
+  color: $color-text-white;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-xl;
+}
+
+.avatar {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: $radius-round;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-lg;
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.avatarText {
+  font-size: 56rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+}
+
+.userDetails {
+  flex: 1;
+}
+
+.userName {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-xs;
+}
+
+.userPhone {
+  font-size: $font-size-sm;
+  opacity: 0.8;
+}
+
+.statusCard {
+  display: flex;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  backdrop-filter: blur(10rpx);
+}
+
+.statusItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  &:not(:last-child) {
+    border-right: 1rpx solid rgba(255, 255, 255, 0.2);
+  }
+}
+
+.statusNumber {
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  margin-bottom: 4rpx;
+}
+
+.statusLabel {
+  font-size: $font-size-xs;
+  opacity: 0.9;
+}
+
+.section {
+  margin: $spacing-md $page-padding;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+}
+
+.sectionTitle {
+  padding: $spacing-md $page-padding 0;
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.menuList {
+  background: $color-bg-card;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  position: relative;
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+  
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: $spacing-lg;
+    right: 0;
+    bottom: 0;
+    height: 1rpx;
+    background: $color-divider;
+  }
+}
+
+.menuIcon {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: $spacing-md;
+  font-size: 32rpx;
+  
+  &.primary {
+    background: $color-bg-primary;
+  }
+  
+  &.success {
+    background: $color-bg-success;
+  }
+  
+  &.warning {
+    background: $color-bg-warning;
+  }
+  
+  &.danger {
+    background: $color-bg-danger;
+  }
+  
+  &.info {
+    background: rgba(15, 198, 194, 0.1);
+  }
+}
+
+.menuContent {
+  flex: 1;
+}
+
+.menuTitle {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+}
+
+.menuRight {
+  display: flex;
+  align-items: center;
+}
+
+.menuRightText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-right: $spacing-sm;
+}
+
+.menuArrow {
+  font-size: $font-size-lg;
+  color: $color-text-tertiary;
+}
+
+.switch {
+  transform: scale(0.8);
+}
+
+.logoutBtn {
+  margin: $spacing-xl $page-padding;
+  height: $button-height-md;
+  background: $color-bg-card;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2rpx solid $color-border;
+  
+  &:active {
+    background: $color-bg-hover;
+  }
+}
+
+.logoutText {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}
+
+.version {
+  text-align: center;
+  font-size: $font-size-xs;
+  color: $color-text-disabled;
+  margin-top: $spacing-xl;
+}

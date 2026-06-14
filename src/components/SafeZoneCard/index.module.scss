@@ -1,0 +1,90 @@
+@use '@/styles/variables.scss' as *;
+
+.zoneCard {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: $radius-md;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 40rpx;
+  
+  &.home {
+    background: rgba(22, 93, 255, 0.1);
+    color: $color-primary;
+  }
+  
+  &.work {
+    background: rgba(15, 198, 194, 0.1);
+    color: $color-secondary;
+  }
+  
+  &.school {
+    background: rgba(255, 125, 0, 0.1);
+    color: $color-warning;
+  }
+  
+  &.custom {
+    background: rgba(0, 180, 42, 0.1);
+    color: $color-success;
+  }
+}
+
+.info {
+  flex: 1;
+  margin-left: $spacing-lg;
+  min-width: 0;
+}
+
+.name {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+}
+
+.address {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  @include text-ellipsis;
+  margin-bottom: $spacing-xs;
+}
+
+.radius {
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.notifyTags {
+  display: flex;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+}
+
+.tag {
+  padding: 2rpx 12rpx;
+  font-size: $font-size-xs;
+  border-radius: $radius-xs;
+  background: $color-bg-hover;
+  color: $color-text-secondary;
+  
+  &.active {
+    background: $color-bg-success;
+    color: $color-success;
+  }
+}

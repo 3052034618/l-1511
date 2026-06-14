@@ -1,0 +1,71 @@
+@use '@/styles/variables.scss' as *;
+
+.sosButton {
+  width: 360rpx;
+  height: 360rpx;
+  border-radius: $radius-round;
+  background: $color-danger-gradient;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 40rpx rgba(245, 63, 63, 0.4);
+  position: relative;
+  transition: all $transition-base;
+  
+  &:active {
+    transform: scale(0.95);
+    box-shadow: 0 4rpx 20rpx rgba(245, 63, 63, 0.3);
+  }
+  
+  &.countdown {
+    animation: pulse 1s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 8rpx 40rpx rgba(245, 63, 63, 0.4);
+  }
+  50% {
+    box-shadow: 0 8rpx 60rpx rgba(245, 63, 63, 0.7);
+  }
+}
+
+.sosText {
+  font-size: 72rpx;
+  font-weight: $font-weight-bold;
+  color: $color-text-white;
+  letter-spacing: 8rpx;
+  margin-bottom: $spacing-sm;
+}
+
+.subText {
+  font-size: $font-size-sm;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.ripple {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: $radius-round;
+  border: 4rpx solid $color-danger;
+  opacity: 0;
+  animation: ripple 1.5s ease-out infinite;
+  
+  &:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}

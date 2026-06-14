@@ -1,0 +1,269 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+}
+
+.header {
+  padding: $spacing-lg $page-padding;
+  background: $color-bg-card;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.dateText {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+}
+
+.statsRow {
+  display: flex;
+  gap: $spacing-lg;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+}
+
+.statIcon {
+  font-size: 28rpx;
+  margin-right: 8rpx;
+}
+
+.statValue {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.mapPlaceholder {
+  height: 400rpx;
+  background: linear-gradient(135deg, #e8f4ff 0%, #d4e8ff 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.mapIcon {
+  font-size: 80rpx;
+  margin-bottom: $spacing-md;
+}
+
+.mapText {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.mapRoute {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  right: 10%;
+  height: 4rpx;
+  background: $color-primary;
+  border-radius: 2rpx;
+}
+
+.startPin, .endPin {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: $radius-round;
+  border: 4rpx solid #fff;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+
+.startPin {
+  left: 10%;
+  background: $color-success;
+}
+
+.endPin {
+  right: 10%;
+  background: $color-danger;
+}
+
+.timelineSection {
+  padding: $spacing-md $page-padding;
+}
+
+.sectionTitle {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pointCount {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  font-weight: normal;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 40rpx;
+}
+
+.timelineLine {
+  position: absolute;
+  left: 10rpx;
+  top: 0;
+  bottom: 0;
+  width: 4rpx;
+  background: $color-border;
+}
+
+.timelineItem {
+  position: relative;
+  padding-bottom: $spacing-lg;
+  
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+.timelineDot {
+  position: absolute;
+  left: -34rpx;
+  top: 8rpx;
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: $radius-round;
+  background: $color-bg-card;
+  border: 4rpx solid $color-primary;
+  z-index: 1;
+  
+  &.start {
+    background: $color-success;
+    border-color: $color-success;
+    width: 24rpx;
+    height: 24rpx;
+    left: -36rpx;
+  }
+  
+  &.end {
+    background: $color-danger;
+    border-color: $color-danger;
+    width: 24rpx;
+    height: 24rpx;
+    left: -36rpx;
+  }
+}
+
+.pointCard {
+  background: $color-bg-card;
+  border-radius: $radius-md;
+  padding: $spacing-md;
+  box-shadow: $shadow-card;
+}
+
+.pointTime {
+  font-size: $font-size-sm;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+  margin-bottom: 4rpx;
+}
+
+.pointAddress {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: $spacing-sm;
+  line-height: 1.5;
+}
+
+.pointMeta {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-xs;
+  color: $color-text-tertiary;
+}
+
+.metaIcon {
+  margin-right: 4rpx;
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc(#{$spacing-md} + env(safe-area-inset-bottom));
+  background: $color-bg-card;
+  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  gap: $spacing-md;
+}
+
+.shareBtn {
+  flex: 1;
+  height: $button-height-md;
+  background: $color-bg-hover;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:active {
+    background: $color-border;
+  }
+}
+
+.shareBtnText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.exportBtn {
+  flex: 2;
+  height: $button-height-md;
+  background: $color-primary-gradient;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(22, 93, 255, 0.3);
+  
+  &:active {
+    opacity: 0.9;
+  }
+}
+
+.exportBtnText {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xxl $page-padding;
+}
+
+.emptyIcon {
+  font-size: 100rpx;
+  margin-bottom: $spacing-lg;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+}

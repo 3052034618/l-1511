@@ -1,0 +1,86 @@
+@use '@/styles/variables.scss' as *;
+
+.contactCard {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-card;
+  margin-bottom: $spacing-md;
+  
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.99);
+    transition: all $transition-fast;
+  }
+}
+
+.avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: $radius-round;
+  background: $color-primary-gradient;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  
+  .avatarText {
+    color: $color-text-white;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.info {
+  flex: 1;
+  margin-left: $spacing-lg;
+  min-width: 0;
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  margin-bottom: $spacing-xs;
+}
+
+.name {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  @include text-ellipsis;
+  max-width: 300rpx;
+}
+
+.emergencyBadge {
+  margin-left: $spacing-sm;
+  padding: 2rpx 12rpx;
+  background: $color-bg-danger;
+  color: $color-danger;
+  font-size: $font-size-xs;
+  border-radius: $radius-xs;
+  flex-shrink: 0;
+}
+
+.relation {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-xs;
+}
+
+.permission {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  background: $color-bg-primary;
+  color: $color-primary;
+  font-size: $font-size-xs;
+  border-radius: $radius-sm;
+}
+
+.arrow {
+  margin-left: $spacing-md;
+  color: $color-text-tertiary;
+  font-size: $font-size-lg;
+}

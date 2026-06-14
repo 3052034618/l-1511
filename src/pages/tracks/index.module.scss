@@ -1,0 +1,230 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+}
+
+.datePicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md $page-padding;
+  background: $color-bg-card;
+  border-bottom: 1rpx solid $color-divider;
+}
+
+.dateText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.dateNav {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+}
+
+.navBtn {
+  width: 64rpx;
+  height: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-round;
+  background: $color-bg-hover;
+  font-size: $font-size-lg;
+  color: $color-text-secondary;
+  
+  &:active {
+    background: $color-border;
+  }
+}
+
+.summaryCard {
+  margin: $spacing-md $page-padding;
+  padding: $spacing-lg;
+  background: $color-primary-gradient;
+  border-radius: $radius-lg;
+  color: $color-text-white;
+  box-shadow: 0 4rpx 20rpx rgba(22, 93, 255, 0.3);
+}
+
+.summaryTitle {
+  font-size: $font-size-md;
+  opacity: 0.9;
+  margin-bottom: $spacing-md;
+}
+
+.summaryRow {
+  display: flex;
+  gap: $spacing-xl;
+}
+
+.summaryItem {
+  flex: 1;
+}
+
+.summaryValue {
+  font-size: $font-size-xxl;
+  font-weight: $font-weight-bold;
+  margin-bottom: 4rpx;
+}
+
+.summaryLabel {
+  font-size: $font-size-sm;
+  opacity: 0.8;
+}
+
+.sectionTitle {
+  padding: $spacing-lg $page-padding $spacing-sm;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-secondary;
+}
+
+.trackList {
+  padding: 0 $page-padding;
+}
+
+.trackCard {
+  background: $color-bg-card;
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-md;
+  box-shadow: $shadow-card;
+  
+  &:active {
+    transform: scale(0.99);
+    transition: all $transition-fast;
+  }
+}
+
+.trackHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: $spacing-md;
+}
+
+.trackDate {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+}
+
+.trackDuration {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.trackInfo {
+  display: flex;
+  gap: $spacing-xl;
+  margin-bottom: $spacing-md;
+}
+
+.trackInfoItem {
+  display: flex;
+  align-items: center;
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+}
+
+.trackInfoIcon {
+  margin-right: 8rpx;
+  font-size: 24rpx;
+}
+
+.trackRoute {
+  padding-top: $spacing-md;
+  border-top: 1rpx solid $color-divider;
+}
+
+.routePoint {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: $spacing-sm;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.routeDot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: $radius-round;
+  margin-top: 10rpx;
+  margin-right: $spacing-sm;
+  flex-shrink: 0;
+  
+  &.start {
+    background: $color-success;
+  }
+  
+  &.end {
+    background: $color-danger;
+  }
+}
+
+.routeLine {
+  width: 4rpx;
+  height: 40rpx;
+  margin-left: 6rpx;
+  margin-right: $spacing-sm;
+  background: $color-border;
+  flex-shrink: 0;
+}
+
+.routeText {
+  font-size: $font-size-sm;
+  color: $color-text-secondary;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.exportBtn {
+  margin: $spacing-lg $page-padding;
+  height: $button-height-md;
+  background: $color-bg-card;
+  border: 2rpx solid $color-primary;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:active {
+    background: $color-bg-primary;
+  }
+}
+
+.exportBtnText {
+  font-size: $font-size-md;
+  color: $color-primary;
+  font-weight: $font-weight-medium;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-xxl $page-padding;
+}
+
+.emptyIcon {
+  font-size: 100rpx;
+  margin-bottom: $spacing-lg;
+}
+
+.emptyText {
+  font-size: $font-size-md;
+  color: $color-text-tertiary;
+  margin-bottom: $spacing-sm;
+}
+
+.emptyHint {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
