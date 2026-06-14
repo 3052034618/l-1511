@@ -1,0 +1,219 @@
+@use '@/styles/variables.scss' as *;
+
+.page {
+  min-height: 100vh;
+  background: $color-bg-page;
+  padding-bottom: 160rpx;
+}
+
+.typeSection {
+  padding: $spacing-lg $page-padding;
+  background: $color-bg-card;
+  margin-bottom: $spacing-md;
+}
+
+.sectionLabel {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-primary;
+  margin-bottom: $spacing-md;
+}
+
+.typeGrid {
+  display: flex;
+  gap: $spacing-md;
+}
+
+.typeItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $spacing-md;
+  border: 2rpx solid $color-border;
+  border-radius: $radius-md;
+  transition: all $transition-fast;
+
+  &.active {
+    border-color: $color-primary;
+    background: $color-bg-primary;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.typeIcon {
+  font-size: 48rpx;
+  margin-bottom: $spacing-sm;
+}
+
+.typeName {
+  font-size: $font-size-sm;
+  color: $color-text-primary;
+}
+
+.formSection {
+  background: $color-bg-card;
+  margin-bottom: $spacing-md;
+}
+
+.formItem {
+  display: flex;
+  align-items: center;
+  padding: $spacing-lg;
+  position: relative;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: $spacing-lg;
+    right: 0;
+    bottom: 0;
+    height: 1rpx;
+    background: $color-divider;
+  }
+}
+
+.label {
+  width: 160rpx;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  flex-shrink: 0;
+}
+
+.inputWrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  text-align: right;
+}
+
+.placeholder {
+  color: $color-text-disabled;
+}
+
+.required {
+  color: $color-error;
+  margin-right: 4rpx;
+}
+
+.errorMsg {
+  padding: $spacing-sm $page-padding;
+  font-size: $font-size-sm;
+  color: $color-error;
+  background: $color-bg-danger;
+}
+
+.notifySection {
+  padding: $spacing-lg $page-padding;
+  background: $color-bg-card;
+  margin-bottom: $spacing-md;
+}
+
+.notifyItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-md 0;
+
+  &:not(:last-child) {
+    border-bottom: 1rpx solid $color-divider;
+  }
+}
+
+.notifyInfo {
+  flex: 1;
+}
+
+.notifyTitle {
+  font-size: $font-size-md;
+  color: $color-text-primary;
+  margin-bottom: 4rpx;
+}
+
+.notifyDesc {
+  font-size: $font-size-sm;
+  color: $color-text-tertiary;
+}
+
+.bottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: $spacing-md $page-padding;
+  padding-bottom: calc(#{$spacing-md} + env(safe-area-inset-bottom));
+  background: $color-bg-card;
+  box-shadow: 0 -2rpx 12rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  gap: $spacing-md;
+}
+
+.cancelBtn {
+  flex: 1;
+  height: $button-height-lg;
+  background: $color-bg-hover;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    background: $color-border;
+  }
+}
+
+.cancelBtnText {
+  font-size: $font-size-md;
+  color: $color-text-secondary;
+}
+
+.saveBtn {
+  flex: 2;
+  height: $button-height-lg;
+  background: $color-primary-gradient;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(22, 93, 255, 0.3);
+
+  &:active {
+    opacity: 0.9;
+    transform: scale(0.98);
+  }
+}
+
+.saveBtnText {
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  color: $color-text-white;
+}
+
+.deleteBtn {
+  margin: $spacing-md $page-padding;
+  height: $button-height-md;
+  background: $color-bg-card;
+  border: 2rpx solid $color-error;
+  border-radius: $radius-button;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:active {
+    background: $color-bg-danger;
+  }
+}
+
+.deleteBtnText {
+  font-size: $font-size-md;
+  color: $color-error;
+}

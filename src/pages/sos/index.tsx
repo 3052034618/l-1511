@@ -2,51 +2,81 @@ import React, { useState, useEffect, useRef } from 'react'
 import { View, Text, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { Contact } from '../../types/contact'
-import { mockContacts } from '../../data/mockContacts'
+import { appStore } from '../../store/appStore'
 import { formatPhoneDisplay } from '../../utils/validator'
 import styles from './index.module.scss'
 
 const SosPage: React.FC = () => {
   const [isActive, setIsActive] = useState(true)
   const [elapsedTime, setElapsedTime] = useState(0)
+  const [recordingCountdown, setRecordingCountdown] = useState(10)
   const [isRecording, setIsRecording] = useState(true)
   const [location, setLocation] = useState({
-    address: '北京市朝阳区望京SOHO附近',
-    latitude: 39.9042,
-    longitude: 116.4074
+    address: '获取中...',
+    latitude: 0,
+    longitude: 0
   })
-  const [notifiedContacts, setNotifiedContacts] = useState<Contact[]>([])
+  const [allContacts, setAllContacts] = useState<Contact[]>([])
+  const [presetPhone, setPresetPhone] = useState('110')
 
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
+  const recordTimerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
-    const emergencyContacts = mockContacts.filter(c => c.isEmergency)
-    setNotifiedContacts(emergencyContacts)
+    const state = appStore.getState()
+    setAllContacts(state.contacts)
+    setPresetPhone(state.presetPhone)
+    setLocation({
+      address: state.currentLocation.address,
+      latitude: state.currentLocation.latitude,
+      longitude: state.currentLocation.longitude
+    })
+  }, [])
 
+  useEffect(() => {
     if (isActive) {
       timerRef.current = setInterval(() => {
         setElapsedTime(prev => prev + 1)
       }, 1000)
     }
-
     return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current)
-      }
+      if (timerRef.current) clearInterval(timerRef.current)
     }
   }, [isActive])
 
   useEffect(() => {
-    if (isRecording && elapsedTime >= 10) {
-      setIsRecording(false)
-      console.log('[SOS] 录音完成，时长10秒')
+    if (isRecording && recordingCountdown > 0) {
+      recordTimerRef.current = setInterval(() => {
+        setRecordingCountdown(prev => {
+          if (prev <= 1) {
+            if (recordTimerRef.current) clearInterval(recordTimerRef.current)
+            setIsRecording(false)
+            console.log('[SOS] 录音完成，时长10秒')
+            return 0
+          }
+          return prev - 1
+        })
+      }, 1000)
     }
-  }, [elapsedTime, isRecording])
+    return () => {
+      if (recordTimerRef.current) clearInterval(recordTimerRef.current)
+    }
+  }, [isRecording, recordingCountdown])
 
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60).toString().padStart(2, '0')
     const secs = (seconds % 60).toString().padStart(2, '0')
     return `${mins}:${secs}`
+  }
+
+  const addSosNotification = (title: string, content: string) => {
+    appStore.getState().addNotification({
+      type: 'sos',
+      title,
+      content,
+      timestamp: new Date().toISOString(),
+      read: false
+    })
   }
 
   const handleCancel = () => {
@@ -57,14 +87,17 @@ const SosPage: React.FC = () => {
       success: (res) => {
         if (res.confirm) {
           setIsActive(false)
-          if (timerRef.current) {
-            clearInterval(timerRef.current)
-          }
+          if (timerRef.current) clearInterval(timerRef.current)
+          if (recordTimerRef.current) clearInterval(recordTimerRef.current)
+          addSosNotification(
+            'SOS报警已取消',
+            `报警已取消，持续时长${formatTime(elapsedTime)}。位置：${location.address}。`
+          )
           console.log('[SOS] 取消报警')
           Taro.showToast({ title: '已取消', icon: 'none' })
           setTimeout(() => {
             Taro.navigateBack()
-          }, 1000)
+          }, 800)
         }
       }
     })
@@ -79,14 +112,17 @@ const SosPage: React.FC = () => {
       success: (res) => {
         if (res.confirm) {
           setIsActive(false)
-          if (timerRef.current) {
-            clearInterval(timerRef.current)
-          }
+          if (timerRef.current) clearInterval(timerRef.current)
+          if (recordTimerRef.current) clearInterval(recordTimerRef.current)
+          addSosNotification(
+            'SOS报警已解除',
+            `报警已解除，持续时长${formatTime(elapsedTime)}。位置：${location.address}。已通知所有联系人和预设电话${presetPhone}。`
+          )
           console.log('[SOS] 结束报警')
           Taro.showToast({ title: '已通知联系人', icon: 'success' })
           setTimeout(() => {
             Taro.navigateBack()
-          }, 1000)
+          }, 800)
         }
       }
     })
@@ -101,12 +137,23 @@ const SosPage: React.FC = () => {
     })
   }
 
+  const handleCallPreset = () => {
+    Taro.makePhoneCall({
+      phoneNumber: presetPhone,
+      fail: (err) => {
+        console.error('[SOS] 拨打预设电话失败:', err)
+      }
+    })
+  }
+
+  const notifiedCount = allContacts.length + 1
+
   return (
     <ScrollView scrollY className={styles.page}>
       <View className={styles.sosContainer}>
         <View className={styles.statusBadge}>
           <View className={styles.statusDot}></View>
-          <Text>{isActive ? 'SOS报警中' : '报警已取消'}</Text>
+          <Text>{isActive ? 'SOS报警中' : '报警已结束'}</Text>
         </View>
 
         <View className={styles.sosButton}>
@@ -145,7 +192,7 @@ const SosPage: React.FC = () => {
             </View>
             <View className={styles.audioInfo}>
               <Text className={styles.audioStatus}>
-                {isRecording ? '录音中...' : '录音完成'}
+                {isRecording ? `录音中... ${recordingCountdown}秒` : '录音完成 (10秒)'}
               </Text>
               <View className={styles.audioWave}>
                 {isRecording ? (
@@ -157,7 +204,7 @@ const SosPage: React.FC = () => {
                     <View className={styles.waveBar}></View>
                   </>
                 ) : (
-                  <Text style={{ fontSize: '24rpx', color: '#86909c' }}>10秒录音已保存</Text>
+                  <Text style={{ fontSize: '24rpx', color: '#86909c' }}>10秒录音已保存并发送给联系人</Text>
                 )}
               </View>
             </View>
@@ -167,12 +214,12 @@ const SosPage: React.FC = () => {
         <View className={styles.contactsCard}>
           <Text className={styles.cardTitle}>
             <Text className={styles.cardIcon}>👥</Text>
-            已通知联系人 ({notifiedContacts.length})
+            通知对象 ({notifiedCount})
           </Text>
           <View className={styles.contactsList}>
-            {notifiedContacts.map(contact => (
-              <View 
-                key={contact.id} 
+            {allContacts.map(contact => (
+              <View
+                key={contact.id}
                 className={styles.contactItem}
                 onClick={() => handleCallContact(contact)}
               >
@@ -186,6 +233,20 @@ const SosPage: React.FC = () => {
                 <Text className={styles.contactStatus}>已通知</Text>
               </View>
             ))}
+
+            <View
+              className={styles.contactItem}
+              onClick={handleCallPreset}
+            >
+              <View className={`${styles.contactAvatar} ${styles.presetAvatar}`}>
+                <Text className={styles.contactAvatarText}>☎️</Text>
+              </View>
+              <View className={styles.contactInfo}>
+                <Text className={styles.contactName}>预设报警电话</Text>
+                <Text className={styles.contactPhone}>{formatPhoneDisplay(presetPhone)}</Text>
+              </View>
+              <Text className={styles.contactStatus}>已通知</Text>
+            </View>
           </View>
         </View>
 

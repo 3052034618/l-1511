@@ -5,6 +5,7 @@ import classnames from 'classnames'
 import { TrackDetail, LocationPoint } from '../../types/location'
 import { getMockTrackDetail } from '../../data/mockTracks'
 import { formatTime, formatDate, formatDistance, formatDuration, formatBattery } from '../../utils/format'
+import { exportTrackPdf } from '../../utils/pdfExport'
 import styles from './index.module.scss'
 
 const TrackDetailPage: React.FC = () => {
@@ -31,26 +32,26 @@ const TrackDetailPage: React.FC = () => {
   }
 
   const handleExport = () => {
-    Taro.showModal({
-      title: '导出轨迹',
-      content: '确定要导出该轨迹记录为PDF吗？',
-      confirmText: '导出',
-      success: (res) => {
-        if (res.confirm) {
-          console.log('[TrackDetail] 导出PDF:', trackId)
-          Taro.showLoading({ title: '生成中...' })
-          setTimeout(() => {
-            Taro.hideLoading()
-            Taro.showToast({ title: '导出成功', icon: 'success' })
-          }, 1500)
-        }
-      }
+    if (!trackDetail) return
+    const points = trackDetail.points
+    exportTrackPdf({
+      date: formatDate(trackDetail.date),
+      distance: formatDistance(trackDetail.distance),
+      duration: formatDuration(trackDetail.duration),
+      points: points.map(p => ({
+        time: formatTime(p.timestamp),
+        address: p.address || '未知位置',
+        battery: p.battery,
+        accuracy: p.accuracy
+      })),
+      startAddress: points[0]?.address || '未知起点',
+      endAddress: points[points.length - 1]?.address || '未知终点'
     })
   }
 
   const handleShare = () => {
     console.log('[TrackDetail] 分享轨迹')
-    Taro.showToast({ title: '分享功能开发中', icon: 'none' })
+    handleExport()
   }
 
   if (!trackDetail) {
@@ -100,7 +101,7 @@ const TrackDetailPage: React.FC = () => {
             位置点时间线
             <Text className={styles.pointCount}>共{points.length}个</Text>
           </Text>
-          
+
           <View className={styles.timeline}>
             <View className={styles.timelineLine}></View>
             {points.map((point, index) => (

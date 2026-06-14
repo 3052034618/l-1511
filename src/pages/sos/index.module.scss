@@ -229,6 +229,10 @@
   justify-content: center;
   margin-right: $spacing-md;
   flex-shrink: 0;
+  
+  &.presetAvatar {
+    background: linear-gradient(135deg, #ff7d00 0%, #ffb347 100%);
+  }
 }
 
 .contactAvatarText {

@@ -8,7 +8,8 @@ export default defineAppConfig({
     'pages/sos/index',
     'pages/safe-zones/index',
     'pages/track-detail/index',
-    'pages/notifications/index'
+    'pages/notifications/index',
+    'pages/zone-edit/index'
   ],
   window: {
     backgroundTextStyle: 'light',

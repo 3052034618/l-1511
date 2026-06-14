@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Switch, ScrollView } from '@tarojs/components'
-import Taro from '@tarojs/taro'
-import { mockContacts } from '../../data/mockContacts'
-import { mockSafeZones } from '../../data/mockSafeZones'
+import Taro, { useDidShow } from '@tarojs/taro'
+import { appStore } from '../../store/appStore'
 import { formatPhoneDisplay } from '../../utils/validator'
 import styles from './index.module.scss'
 
@@ -10,9 +9,14 @@ const MinePage: React.FC = () => {
   const [autoLocation, setAutoLocation] = useState(true)
   const [batteryMonitor, setBatteryMonitor] = useState(true)
   const [notification, setNotification] = useState(true)
+  const [emergencyCount, setEmergencyCount] = useState(0)
+  const [safeZoneCount, setSafeZoneCount] = useState(0)
 
-  const emergencyCount = mockContacts.filter(c => c.isEmergency).length
-  const safeZoneCount = mockSafeZones.length
+  useDidShow(() => {
+    const state = appStore.getState()
+    setEmergencyCount(state.contacts.filter(c => c.isEmergency).length)
+    setSafeZoneCount(state.safeZones.length)
+  })
 
   const goToSafeZones = () => {
     Taro.navigateTo({ url: '/pages/safe-zones/index' })
@@ -20,10 +24,6 @@ const MinePage: React.FC = () => {
 
   const goToNotifications = () => {
     Taro.navigateTo({ url: '/pages/notifications/index' })
-  }
-
-  const goToContactEdit = () => {
-    Taro.navigateTo({ url: '/pages/contact-edit/index' })
   }
 
   const handleAutoLocationChange = (value: boolean) => {

@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, Text, ScrollView } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useDidShow } from '@tarojs/taro'
 import classnames from 'classnames'
 import { NotificationItem } from '../../types/sos'
-import { mockNotifications } from '../../data/mockNotifications'
+import { appStore } from '../../store/appStore'
 import { getRelativeTime } from '../../utils/format'
 import styles from './index.module.scss'
 
@@ -13,28 +13,18 @@ const NotificationsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>('all')
   const [notifications, setNotifications] = useState<NotificationItem[]>([])
 
-  useEffect(() => {
-    loadNotifications()
-  }, [])
-
-  const loadNotifications = () => {
-    setNotifications(mockNotifications)
-  }
+  useDidShow(() => {
+    setNotifications([...appStore.getState().notifications])
+  })
 
   const getFilteredNotifications = (): NotificationItem[] => {
-    if (activeTab === 'all') {
-      return notifications
-    }
+    if (activeTab === 'all') return notifications
     return notifications.filter(n => n.type === activeTab)
   }
 
   const getUnreadCount = (type?: TabType): number => {
-    if (type === 'all') {
-      return notifications.filter(n => !n.read).length
-    }
-    if (type) {
-      return notifications.filter(n => n.type === type && !n.read).length
-    }
+    if (type === 'all') return notifications.filter(n => !n.read).length
+    if (type) return notifications.filter(n => n.type === type && !n.read).length
     return 0
   }
 
@@ -47,27 +37,18 @@ const NotificationsPage: React.FC = () => {
 
   const getNotificationIcon = (type: string) => {
     switch (type) {
-      case 'sos':
-        return '🚨'
-      case 'warning':
-        return '⚠️'
-      case 'info':
-        return 'ℹ️'
-      case 'geofence':
-        return '📍'
-      default:
-        return '📋'
+      case 'sos': return '🚨'
+      case 'warning': return '⚠️'
+      case 'info': return 'ℹ️'
+      case 'geofence': return '📍'
+      default: return '📋'
     }
   }
 
   const handleItemClick = (item: NotificationItem) => {
     console.log('[Notifications] 点击通知:', item.id)
-    
-    setNotifications(prev => 
-      prev.map(n => 
-        n.id === item.id ? { ...n, read: true } : n
-      )
-    )
+    appStore.getState().markNotificationRead(item.id)
+    setNotifications([...appStore.getState().notifications])
 
     if (item.type === 'sos') {
       Taro.navigateTo({ url: '/pages/sos/index' })
@@ -77,7 +58,8 @@ const NotificationsPage: React.FC = () => {
   }
 
   const handleMarkAllRead = () => {
-    setNotifications(prev => prev.map(n => ({ ...n, read: true })))
+    appStore.getState().markAllNotificationsRead()
+    setNotifications([...appStore.getState().notifications])
     Taro.showToast({ title: '已全部标为已读', icon: 'none' })
   }
 

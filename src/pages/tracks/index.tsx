@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, ScrollView } from '@tarojs/components'
 import Taro from '@tarojs/taro'
 import { TrackSummary } from '../../types/location'
-import { mockTrackSummaries } from '../../data/mockTracks'
-import { formatDistance, formatTime, formatDate, getRelativeTime } from '../../utils/format'
+import { mockTrackSummaries, getMockTrackDetail } from '../../data/mockTracks'
+import { formatDistance, formatTime, formatDate, getRelativeTime, formatDuration, formatBattery } from '../../utils/format'
+import { exportTrackPdf } from '../../utils/pdfExport'
 import styles from './index.module.scss'
 
 const TracksPage: React.FC = () => {
@@ -48,20 +49,43 @@ const TracksPage: React.FC = () => {
   }
 
   const handleTrackClick = (track: TrackSummary) => {
-    Taro.navigateTo({ 
-      url: `/pages/track-detail/index?id=${track.id}` 
+    Taro.navigateTo({
+      url: `/pages/track-detail/index?id=${track.id}`
     })
   }
 
   const handleExport = () => {
+    const track = tracks.find(t => t.date === selectedDate)
+    if (!track) {
+      Taro.showToast({ title: '无当天轨迹', icon: 'none' })
+      return
+    }
+
     Taro.showModal({
       title: '导出轨迹',
-      content: `确定要导出${formatDate(selectedDate)}的轨迹记录为PDF吗？`,
+      content: `确定要导出${formatDate(selectedDate)}的轨迹记录吗？`,
       confirmText: '导出',
       success: (res) => {
         if (res.confirm) {
-          console.log('[Tracks] 导出PDF')
-          Taro.showToast({ title: '导出成功', icon: 'success' })
+          const detail = getMockTrackDetail(track.id)
+          if (!detail) {
+            Taro.showToast({ title: '导出失败', icon: 'none' })
+            return
+          }
+          const points = detail.points
+          exportTrackPdf({
+            date: formatDate(detail.date),
+            distance: formatDistance(detail.distance),
+            duration: formatDuration(detail.duration),
+            points: points.map(p => ({
+              time: formatTime(p.timestamp),
+              address: p.address || '未知位置',
+              battery: p.battery,
+              accuracy: p.accuracy
+            })),
+            startAddress: points[0]?.address || track.startAddress || '未知起点',
+            endAddress: points[points.length - 1]?.address || track.endAddress || '未知终点'
+          })
         }
       }
     })
@@ -80,8 +104,6 @@ const TracksPage: React.FC = () => {
       Taro.offPullDownRefresh(handleRefresh)
     }
   }, [])
-
-  const selectedTrack = tracks.find(t => t.date === selectedDate)
 
   return (
     <View className={styles.page}>
@@ -131,8 +153,8 @@ const TracksPage: React.FC = () => {
         ) : (
           <View className={styles.trackList}>
             {tracks.map(track => (
-              <View 
-                key={track.id} 
+              <View
+                key={track.id}
                 className={styles.trackCard}
                 onClick={() => handleTrackClick(track)}
               >
@@ -144,7 +166,7 @@ const TracksPage: React.FC = () => {
                     {getRelativeTime(track.endTime)}
                   </Text>
                 </View>
-                
+
                 <View className={styles.trackInfo}>
                   <View className={styles.trackInfoItem}>
                     <Text className={styles.trackInfoIcon}>📍</Text>

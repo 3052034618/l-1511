@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, Input, ScrollView } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useDidShow } from '@tarojs/taro'
 import ContactCard from '../../components/ContactCard'
 import { Contact } from '../../types/contact'
-import { mockContacts } from '../../data/mockContacts'
+import { appStore } from '../../store/appStore'
 import styles from './index.module.scss'
 
 const ContactsPage: React.FC = () => {
@@ -11,25 +11,25 @@ const ContactsPage: React.FC = () => {
   const [searchText, setSearchText] = useState('')
   const [filteredContacts, setFilteredContacts] = useState<Contact[]>([])
 
-  useEffect(() => {
-    loadContacts()
-  }, [])
+  const refreshList = () => {
+    setContacts([...appStore.getState().contacts])
+  }
+
+  useDidShow(() => {
+    refreshList()
+  })
 
   useEffect(() => {
     filterContacts()
   }, [contacts, searchText])
-
-  const loadContacts = () => {
-    setContacts(mockContacts)
-  }
 
   const filterContacts = () => {
     if (!searchText.trim()) {
       setFilteredContacts(contacts)
       return
     }
-    const filtered = contacts.filter(c => 
-      c.name.includes(searchText) || 
+    const filtered = contacts.filter(c =>
+      c.name.includes(searchText) ||
       c.phone.includes(searchText) ||
       c.relation.includes(searchText)
     )
@@ -41,16 +41,16 @@ const ContactsPage: React.FC = () => {
   }
 
   const handleContactClick = (contact: Contact) => {
-    Taro.navigateTo({ 
-      url: `/pages/contact-edit/index?id=${contact.id}` 
+    Taro.navigateTo({
+      url: `/pages/contact-edit/index?id=${contact.id}`
     })
   }
 
   const handleRefresh = () => {
     setTimeout(() => {
-      loadContacts()
+      refreshList()
       Taro.stopPullDownRefresh()
-    }, 800)
+    }, 500)
   }
 
   useEffect(() => {

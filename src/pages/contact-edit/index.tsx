@@ -3,7 +3,7 @@ import { View, Text, Input, Switch, ScrollView } from '@tarojs/components'
 import Taro, { useRouter } from '@tarojs/taro'
 import classnames from 'classnames'
 import { Contact, ContactPermission, ContactPermissionText, ContactFormData } from '../../types/contact'
-import { mockContacts } from '../../data/mockContacts'
+import { appStore } from '../../store/appStore'
 import { validatePhone, validateName, validateRequired, isDuplicatePhone } from '../../utils/validator'
 import styles from './index.module.scss'
 
@@ -21,13 +21,11 @@ const ContactEditPage: React.FC = () => {
   })
 
   const [errors, setErrors] = useState<Record<string, string>>({})
-  const [contact, setContact] = useState<Contact | null>(null)
 
   useEffect(() => {
-    if (isEdit) {
-      const found = mockContacts.find(c => c.id === contactId)
+    if (isEdit && contactId) {
+      const found = appStore.getState().contacts.find(c => c.id === contactId)
       if (found) {
-        setContact(found)
         setFormData({
           name: found.name,
           phone: found.phone,
@@ -42,6 +40,7 @@ const ContactEditPage: React.FC = () => {
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {}
+    const currentContacts = appStore.getState().contacts
 
     if (!validateRequired(formData.name)) {
       newErrors.name = '请输入姓名'
@@ -54,7 +53,7 @@ const ContactEditPage: React.FC = () => {
     } else if (!validatePhone(formData.phone)) {
       newErrors.phone = '请输入正确的手机号格式'
     } else {
-      const existingPhones = mockContacts
+      const existingPhones = currentContacts
         .filter(c => c.id !== contactId)
         .map(c => c.phone)
       if (isDuplicatePhone(formData.phone, existingPhones)) {
@@ -74,9 +73,9 @@ const ContactEditPage: React.FC = () => {
     setFormData(prev => ({ ...prev, [field]: value }))
     if (errors[field]) {
       setErrors(prev => {
-        const newErrors = { ...prev }
-        delete newErrors[field]
-        return newErrors
+        const next = { ...prev }
+        delete next[field]
+        return next
       })
     }
   }
@@ -95,8 +94,26 @@ const ContactEditPage: React.FC = () => {
       return
     }
 
-    console.log('[ContactEdit] 保存联系人:', formData)
-    
+    if (isEdit && contactId) {
+      appStore.getState().updateContact(contactId, {
+        name: formData.name,
+        phone: formData.phone,
+        relation: formData.relation,
+        permission: formData.permission,
+        isEmergency: formData.isEmergency
+      })
+      console.log('[ContactEdit] 更新联系人:', contactId, formData)
+    } else {
+      appStore.getState().addContact({
+        name: formData.name,
+        phone: formData.phone,
+        relation: formData.relation,
+        permission: formData.permission,
+        isEmergency: formData.isEmergency
+      })
+      console.log('[ContactEdit] 新增联系人:', formData)
+    }
+
     Taro.showToast({
       title: isEdit ? '修改成功' : '添加成功',
       icon: 'success'
@@ -104,21 +121,22 @@ const ContactEditPage: React.FC = () => {
 
     setTimeout(() => {
       Taro.navigateBack()
-    }, 1000)
+    }, 800)
   }
 
   const handleDelete = () => {
     Taro.showModal({
       title: '删除联系人',
-      content: '确定要删除该联系人吗？',
+      content: '确定要删除该联系人吗？删除后不可恢复。',
       confirmColor: '#f53f3f',
       success: (res) => {
         if (res.confirm) {
+          appStore.getState().deleteContact(contactId!)
           console.log('[ContactEdit] 删除联系人:', contactId)
           Taro.showToast({ title: '删除成功', icon: 'success' })
           setTimeout(() => {
             Taro.navigateBack()
-          }, 1000)
+          }, 800)
         }
       }
     })
@@ -242,7 +260,7 @@ const ContactEditPage: React.FC = () => {
         <View className={styles.cancelBtn} onClick={handleCancel}>
           <Text className={styles.cancelBtnText}>取消</Text>
         </View>
-        <View 
+        <View
           className={classnames(styles.saveBtn)}
           onClick={handleSave}
         >
